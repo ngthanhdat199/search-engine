@@ -21,6 +21,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
+
 	if err := store.RunMigrations(db, "migrations/0001_init.sql"); err != nil {
 		logger.Fatal(err)
 	}
@@ -28,8 +29,8 @@ func main() {
 	// Seed a few safe docs (change these to sites you’re allowed to crawl)
 	seeds := []string{
 		"https://go.dev/blog/declaration-syntax",
-		"https://go.dev/blog/context",
-		"https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/",
+		// "https://go.dev/blog/context",
+		// "https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/",
 	}
 
 	client := &http.Client{Timeout: 10 * time.Second}

@@ -1,11 +1,14 @@
 package search
 
 import (
+	"fmt"
 	"strings"
 
 	"search-engine/internal/index"
 	"search-engine/internal/rank"
 	"search-engine/internal/text"
+
+	util "search-engine/pkg/util"
 )
 
 type Item struct {
@@ -17,8 +20,12 @@ type Item struct {
 }
 
 func Query(ix *index.Engine, q string, topK int) (terms []string, results []Item) {
+	fmt.Println("Query:", q)
+	fmt.Println("TopK:", topK)
 	qTerms := text.Tokenize(strings.TrimSpace(q))
+	fmt.Println("Query terms:", qTerms)
 	scores := rank.BM25(ix, qTerms, 1.5, 0.75, topK)
+	fmt.Println("Scores:", scores)
 	out := make([]Item, 0, len(scores))
 	for _, s := range scores {
 		out = append(out, Item{
@@ -28,5 +35,8 @@ func Query(ix *index.Engine, q string, topK int) (terms []string, results []Item
 			Score: s.Score,
 		})
 	}
+
+	fmt.Println("Results:", util.ToJSON(out))
+
 	return qTerms, out
 }

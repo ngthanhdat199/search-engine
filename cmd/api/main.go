@@ -39,6 +39,7 @@ func main() {
 	if err != nil {
 		logger.Fatalf("index build: %v", err)
 	}
+	// logger.Print("avgdl=", ix.Postings)
 	logger.Printf("index ready: docs=%d, terms=%d", ix.N, len(ix.Postings))
 
 	// app := &App{DB: db, Idx: ix, Log: logger}
